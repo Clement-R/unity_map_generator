@@ -5,7 +5,6 @@ using System.Collections;
 public class ElevationNoise : MonoBehaviour {
     public int pixWidth;
     public int pixHeight;
-    // public float frequency = 1.0F;
     public Vector2[] octaves;
 
     [System.Serializable]
@@ -22,9 +21,16 @@ public class ElevationNoise : MonoBehaviour {
         noiseTex = new Texture2D(pixWidth, pixHeight);
         noiseTex.name = "Procedural Texture";
         pix = new Color[noiseTex.width * noiseTex.height];
-        CalcNoise();
         GetComponent<Renderer>().material.mainTexture = noiseTex;
         GetComponent<Renderer>().material.shader = Shader.Find("Unlit/Texture");
+
+        StartCoroutine("recalc");
+    }
+
+    IEnumerator recalc() {
+        CalcNoise();
+        yield return new WaitForSeconds(0.5f);
+        StartCoroutine("recalc");
     }
 
     void CalcNoise() {
@@ -44,7 +50,7 @@ public class ElevationNoise : MonoBehaviour {
                     sample = Mathf.PerlinNoise(xCoord, yCoord);
                 }
 
-                Color col = new Color();
+                Color col = Color.black;
                 foreach (var biome in biomes) {
                     if(sample <= biome.treshold) {
                         col = biome.color;
@@ -52,7 +58,10 @@ public class ElevationNoise : MonoBehaviour {
                     }
                 }
 
-                // pix[(int)(y * noiseTex.width + x)] = new Color(sample, sample, sample);
+                if(col == Color.black) {
+                    col = biomes[biomes.Length - 1].color;
+                }
+
                 pix[(int)(y * noiseTex.width + x)] = col;
 
                 x++;
@@ -61,9 +70,5 @@ public class ElevationNoise : MonoBehaviour {
         }
         noiseTex.SetPixels(pix);
         noiseTex.Apply();
-    }
-
-    void Update() {
-        CalcNoise();
     }
 }
