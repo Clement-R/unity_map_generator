@@ -11,8 +11,6 @@ public class PerlinNoise : MonoBehaviour {
     private Texture2D noiseTex;
     private Color[] pix;
 
-    private 
-
     void Start() {
         noiseTex = new Texture2D(pixWidth, pixHeight);
         noiseTex.name = "Procedural Texture";
