@@ -6,7 +6,9 @@ public class ElevationNoise : MonoBehaviour {
     public int pixWidth;
     public int pixHeight;
     public int tileSize = 16;
+    public int seed = 0;
     public Vector2[] octaves;
+    public Biome[] biomes;
 
     [System.Serializable]
     public class Biome {
@@ -14,9 +16,7 @@ public class ElevationNoise : MonoBehaviour {
         public Color color;
         public GameObject tile;
     }
-
-    public Biome[] biomes;
-
+    
     private Texture2D noiseTex;
     private Color[] pix;
     private GameObject[] tilemap;
@@ -35,8 +35,10 @@ public class ElevationNoise : MonoBehaviour {
 
     IEnumerator recalc() {
         CalcNoise();
-        yield return new WaitForSeconds(0.5f);
-        // StartCoroutine("recalc");
+        // Can't enable realtime refresh of tilemap because it's causing terrible CPU consumption
+        // GameObject.Find("TileMap").GetComponent<TilemapManager>().worldGenerated = false;
+        yield return new WaitForSeconds(1f);
+        StartCoroutine("recalc");
     }
 
     void CalcNoise() {
@@ -52,10 +54,10 @@ public class ElevationNoise : MonoBehaviour {
                 float sample = 0.0f;
                 if (octaves.Length > 0) {
                     foreach (var octave in octaves) {
-                        sample += octave.x * Mathf.PerlinNoise(xCoord * octave.y, yCoord * octave.y);
+                        sample += octave.x * Mathf.PerlinNoise(this.seed + (xCoord * octave.y), this.seed + (yCoord * octave.y));
                     }
                 } else {
-                    sample = Mathf.PerlinNoise(xCoord, yCoord);
+                    sample = Mathf.PerlinNoise(this.seed + xCoord, this.seed + yCoord);
                 }
 
                 Color col = Color.black;

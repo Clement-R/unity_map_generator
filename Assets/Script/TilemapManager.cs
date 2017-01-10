@@ -2,9 +2,11 @@
 using System.Collections;
 
 public class TilemapManager : MonoBehaviour {
+    public bool worldGenerated = false;
+
     private ElevationNoise terrainGenerator;
     private GameObject[] map;
-    private bool worldGenerated = false;
+    private GameObject tilemapGameObject;
     private int mapWidth;
     private int mapHeight;
 
@@ -14,7 +16,8 @@ public class TilemapManager : MonoBehaviour {
 	
 	void Update () {
         if (!worldGenerated) {
-            GameObject tilemapGameObject = new GameObject("Tilemap container");
+            Destroy(tilemapGameObject);
+            tilemapGameObject = new GameObject("Tilemap container");
             map = terrainGenerator.GetMap();
             mapWidth = terrainGenerator.pixWidth;
             
