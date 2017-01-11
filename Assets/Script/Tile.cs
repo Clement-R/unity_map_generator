@@ -19,9 +19,12 @@ public class Tile : MonoBehaviour {
             GetComponent<SpriteRenderer>().color = Color.white;
         }
 
+        /*
         if (Input.GetMouseButton(0)) {
             CastRay();
         }
+        */
+        CastRay();
     }
 
     void CastRay() {
