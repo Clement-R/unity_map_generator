@@ -19,6 +19,8 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 4000010772378020}
+  - 114: {fileID: 114000010083477938}
+  - 114: {fileID: 114000011453954900}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -39,3 +41,30 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &114000010083477938
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013203982924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2062124292f14ac4e998e296e6db02c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numberOfPlayers: 4
+  playerBase: {fileID: 1000014052899542, guid: a238c0e36d3fd2f4b889dee54c75e4b5, type: 2}
+  soldier: {fileID: 1000010794924068, guid: cfa2c48423bb13f428a18ac0de4b3b6c, type: 2}
+  focusedTile: {fileID: 0}
+  cameraSpeed: 10
+--- !u!114 &114000011453954900
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013203982924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f9da2db18fcf664cbda3e86251f396f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

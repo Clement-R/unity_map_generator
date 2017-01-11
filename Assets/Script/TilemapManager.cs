@@ -3,7 +3,6 @@ using System.Collections;
 
 public class TilemapManager : MonoBehaviour {
     public bool worldGenerated = false;
-    public Vector2 mousePosition = new Vector2(0, 0);
     public GameObject[][] tilemap = null;
 
     private ElevationNoise terrainGenerator;
@@ -39,22 +38,12 @@ public class TilemapManager : MonoBehaviour {
                 
                 GameObject tile = Instantiate(map[i - 1], new Vector3(x, y, 0), Quaternion.identity, tilemapGameObject.transform) as GameObject;
                 tile.name = "tile" + i;
+                tile.GetComponent<Tile>().position = new Vector2(x / terrainGenerator.tileSize, y / terrainGenerator.tileSize);
                 tilemap[y / terrainGenerator.tileSize][x / terrainGenerator.tileSize] = tile;
 
                 x += terrainGenerator.tileSize;
             }
             worldGenerated = true;
-
-            /*
-             * DEBUG
-            for (int i = 0; i < 32; i++) {
-                for (int j = 0; j < 32; j++) {
-                    Debug.Log("X : " + j + " Y : " + i);
-                    Debug.Log(tilemap[i][j]);
-                }
-            }
-            */
-            
         }
     }
 }

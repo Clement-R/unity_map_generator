@@ -2,7 +2,8 @@
 using System.Collections;
 
 public class Tile : MonoBehaviour {
-
+    public GameManager god;
+    public Vector2 position;
     public bool isWalkable = true;
     public int index = 0;
     public int aStarWeight = 0;
@@ -10,21 +11,20 @@ public class Tile : MonoBehaviour {
     public bool isFocused = false;
 
 	void Start () {
+        god = GameObject.Find("GameManager").GetComponent<GameManager>();
 	}
 	
 	void Update () {
         if(isFocused) {
-            // GetComponent<SpriteRenderer>().color = Color.black;
+            GetComponent<SpriteRenderer>().color = Color.black;
         } else {
             GetComponent<SpriteRenderer>().color = Color.white;
         }
-
-        /*
-        if (Input.GetMouseButton(0)) {
-            CastRay();
-        }
-        */
+        
         CastRay();
+        if (Input.GetMouseButtonDown(0) && isFocused) {
+            god.focusedTile = this;
+        }
     }
 
     void CastRay() {
@@ -33,9 +33,9 @@ public class Tile : MonoBehaviour {
 
         if (hit.collider != null) {
             if(this.name == hit.collider.name) {
-                this.GetComponent<SpriteRenderer>().color = Color.black;
+                isFocused = true;
             } else {
-                this.GetComponent<SpriteRenderer>().color = Color.white;
+                isFocused = false;
             }
         }
     }
