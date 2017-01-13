@@ -67,10 +67,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80dd81753d87ad24a841d59dc05f68d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isWalkable: 0
+  god: {fileID: 0}
+  isWalkable: 1
   index: 0
-  aStarWeight: 0
+  weight: 2
+  parent: {fileID: 0}
+  gCost: 0
+  hCost: 0
   isFocused: 0
+  showingRange: 0
+  showingPath: 0
 --- !u!212 &212000012340232056
 SpriteRenderer:
   m_ObjectHideFlags: 1
