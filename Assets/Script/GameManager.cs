@@ -97,12 +97,9 @@ public class GameManager : MonoBehaviour {
         }
         else if (isWorldReady && !playersReady) {
             // Let players choose their base, one by one
-            // activePlayer = players[activePlayerIndex];
-            // Player activePlayer = players[turn];
             if (activePlayer.baseIsPlaced) {
                 turn++;
-            }
-            else {
+            } else {
                 if (lastTileClicked != null) {
                     activePlayer.basePosition = new Position((int)lastTileClicked.position.x, (int)lastTileClicked.position.y);
                     bases.Add(activePlayerIndex, Instantiate(playerBase, new Vector3((int)lastTileClicked.position.x * this.tileSize, (int)lastTileClicked.position.y * this.tileSize, 0), Quaternion.identity) as GameObject);
@@ -148,33 +145,37 @@ public class GameManager : MonoBehaviour {
                     }
 
                     if (Input.GetMouseButtonDown(0)) {
-                        firstUnit.GetComponent<Unit>().position = focusedTile.position;
-                        firstUnit.transform.position = new Vector2(focusedTile.position.x * tileSize, focusedTile.position.y * tileSize);
+                        if (isTileInRange(focusedTile)) {
+                            firstUnit.GetComponent<Unit>().position = focusedTile.position;
+                            firstUnit.transform.position = new Vector2(focusedTile.position.x * tileSize, focusedTile.position.y * tileSize);
 
-                        // Check if an unit is under the targeted position
-                        foreach (var unit in units) {
-                            if (unit.playerIndex != activePlayerIndex) {
-                                Debug.Log(unit.position.x + " ; " + unit.position.y);
-                                if (unit.position == focusedTile.position) {
-                                    // We keep the index of the attacked player
-                                    int attackedPlayerIndex = unit.playerIndex;
+                            // Check if an unit is under the targeted position
+                            foreach (var unit in units) {
+                                if (unit.playerIndex != activePlayerIndex) {
+                                    if (unit.position == focusedTile.position) {
+                                        // We keep the index of the attacked player
+                                        int attackedPlayerIndex = unit.playerIndex;
 
-                                    // Destroy the unit
-                                    players[unit.playerIndex].units.Remove(unit.gameObject);
-                                    Destroy(unit.gameObject);
+                                        // Destroy the unit
+                                        Debug.Log(attackedPlayerIndex);
+                                        players[attackedPlayerIndex].units.Remove(unit.gameObject);
+                                        units.Remove(unit);
+                                        Destroy(unit.gameObject);
 
-                                    // We check if it was the last unit of the player
-                                    if (players[attackedPlayerIndex].units.Count == 0) {
-                                        Destroy(bases[attackedPlayerIndex]);
-                                        players[attackedPlayerIndex].dead = true;
+                                        // We check if it was the last unit of the player
+                                        if (players[attackedPlayerIndex].units.Count == 0) {
+                                            Destroy(bases[attackedPlayerIndex]);
+                                            players[attackedPlayerIndex].dead = true;
+                                        }
+
+                                        break;
                                     }
                                 }
                             }
+
+                            turnEnd();
                         }
-
-                        turnEnd();
                     }
-
                 }
                 else {
                     if (lastPath != null) {
@@ -250,19 +251,19 @@ public class GameManager : MonoBehaviour {
 
             if (y == 0) {
                 // If we're on the first or last cell
-                if (x >= 0 && y >= 0 && x < tilemapManager.mapWidth * tileSize && y < tilemapManager.mapHeight * tileSize)
+                if (x >= 0 && y >= 0 && x < tilemapManager.mapWidth && y < tilemapManager.mapHeight)
                     validPositions.Add(new Position(x, soldierPos.y));
             } else {
-                if(x != soldierPos.x && y != soldierPos.y && x >= 0 && y >= 0 && x < tilemapManager.mapWidth * tileSize && y < tilemapManager.mapHeight * tileSize)
+                if(x != soldierPos.x && y != soldierPos.y && x >= 0 && y >= 0 && x < tilemapManager.mapWidth && y < tilemapManager.mapHeight)
                     validPositions.Add(new Position(x, soldierPos.y));
                 
                 for (int j = 1; j <= y; j++) {
-                    if(x >= 0 && y >= 0 && x < tilemapManager.mapWidth * tileSize && y < tilemapManager.mapHeight * tileSize)
+                    if(x >= 0 && y >= 0 && x < tilemapManager.mapWidth && y < tilemapManager.mapHeight)
                         validPositions.Add(new Position(x, soldierPos.y + j));
                 }
 
                 for (int j = y; j > 0; j--) {
-                    if (x >= 0 && y >= 0 && x < tilemapManager.mapWidth * tileSize && y < tilemapManager.mapHeight * tileSize)
+                    if (x >= 0 && y >= 0 && x < tilemapManager.mapWidth && y < tilemapManager.mapHeight)
                         validPositions.Add(new Position(x, soldierPos.y - j));
                 }
             }
@@ -285,8 +286,10 @@ public class GameManager : MonoBehaviour {
             // Draw range
             GameObject container = new GameObject("range");
             foreach (var tile in tilesInRange) {
-                container.transform.parent = unit.transform;
-                Instantiate(rangeDisplay, new Vector3((int)tile.x * tileSize, (int)tile.y * tileSize, 0), Quaternion.identity, container.transform);
+                if(tilemapManager.isWalkable(tile)) {
+                    container.transform.parent = unit.transform;
+                    Instantiate(rangeDisplay, new Vector3((int)tile.x * tileSize, (int)tile.y * tileSize, 0), Quaternion.identity, container.transform);
+                }
             }
             unit.rangeDrawn = true;
             rangeDrawn = true;

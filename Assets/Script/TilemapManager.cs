@@ -39,6 +39,14 @@ public class TilemapManager : MonoBehaviour {
 
         return neighbours;
     }
+
+    public bool isWalkable(Position position) {
+        if(tilemap[position.y][position.x].GetComponent<Tile>().isWalkable) {
+            return true;
+        }
+
+        return false;
+    }
 	
 	void Update () {
         if (!worldGenerated) {
