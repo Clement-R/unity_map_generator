@@ -70,7 +70,7 @@ MonoBehaviour:
   god: {fileID: 0}
   isWalkable: 1
   index: 0
-  weight: 2
+  weight: 10
   parent: {fileID: 0}
   gCost: 0
   hCost: 0
