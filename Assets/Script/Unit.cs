@@ -7,6 +7,7 @@ public class Unit : MonoBehaviour {
     public int playerIndex = 0;
     public Position position;
     public bool rangeDrawn = false;
+    public GameObject deathEffect;
 
     private bool isFocused = false;
 
@@ -39,5 +40,9 @@ public class Unit : MonoBehaviour {
                 isFocused = false;
             }
         }
+    }
+
+    void OnDestroy() {
+        Instantiate(deathEffect, transform.position, Quaternion.identity);
     }
 }

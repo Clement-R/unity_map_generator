@@ -16,11 +16,12 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000010772378020}
-  - 114: {fileID: 114000010083477938}
-  - 114: {fileID: 114000011453954900}
+  - component: {fileID: 4000010772378020}
+  - component: {fileID: 114000010083477938}
+  - component: {fileID: 114000011453954900}
+  - component: {fileID: 114477493573590056}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -37,10 +38,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 233.97226, y: 84.17697, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &114000010083477938
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -52,11 +53,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2062124292f14ac4e998e296e6db02c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraSpeed: 10
   numberOfPlayers: 4
   playerBase: {fileID: 1000014052899542, guid: a238c0e36d3fd2f4b889dee54c75e4b5, type: 2}
-  soldier: {fileID: 1000010794924068, guid: cfa2c48423bb13f428a18ac0de4b3b6c, type: 2}
+  playerBaseDestroyEffect: {fileID: 1556422488410438, guid: f1a4536976d91974db7daaef7aae10dc,
+    type: 2}
+  soldiers:
+  - {fileID: 1000010794924068, guid: cfa2c48423bb13f428a18ac0de4b3b6c, type: 2}
+  - {fileID: 1490108084293498, guid: 0d245a20cbee8ba49a3d95fe4b7a4f96, type: 2}
+  - {fileID: 1554085980089760, guid: 267716a0bd0196d45ab5fbfed9382c0a, type: 2}
+  - {fileID: 1767191339953436, guid: eb91ed924a7727b49bf54ec546dfa9a9, type: 2}
+  rangeDisplay: {fileID: 1665844256742568, guid: 8161b586007b8cc4f867d763a1e0814d,
+    type: 2}
+  winPanel: {fileID: 0}
+  lastTileClicked: {fileID: 0}
   focusedTile: {fileID: 0}
-  cameraSpeed: 10
+  previousFocusedTile: {fileID: 0}
+  activePlayerIndex: 0
+  tileSize: 0
+  rangeDrawn: 0
 --- !u!114 &114000011453954900
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -68,3 +83,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f9da2db18fcf664cbda3e86251f396f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114477493573590056
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013203982924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a06916025d64892458e347f228c63514, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  path: []

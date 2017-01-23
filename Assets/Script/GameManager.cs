@@ -1,19 +1,27 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
+    public int cameraSpeed = 10;
     public int numberOfPlayers;
     public GameObject playerBase;
-    public GameObject soldier;
+    public GameObject playerBaseDestroyEffect;
+    public GameObject[] soldiers;
     public GameObject rangeDisplay;
+    public GameObject winPanel;
+
     [HideInInspector]
     public Tile lastTileClicked = null;
+    [HideInInspector]
     public Tile focusedTile = null;
+    [HideInInspector]
     public Tile previousFocusedTile = null;
-    public int cameraSpeed = 10;
     public int activePlayerIndex = 0;
+    [HideInInspector]
     public int tileSize;
+    [HideInInspector]
     public bool rangeDrawn = false;
 
     private bool isWorldReady = false;
@@ -112,7 +120,7 @@ public class GameManager : MonoBehaviour {
             Debug.Log("All players base are ready");
             // Spawn soldiers for each player
             foreach (var player in players) {
-                spawnUnit(soldier, player.Value.basePosition, player.Value);
+                spawnUnit(soldiers[player.Key], player.Value.basePosition, player.Value);
             }
             soldiersSpawned = true;
             turn++;
@@ -157,13 +165,13 @@ public class GameManager : MonoBehaviour {
                                         int attackedPlayerIndex = unit.playerIndex;
 
                                         // Destroy the unit
-                                        Debug.Log(attackedPlayerIndex);
                                         players[attackedPlayerIndex].units.Remove(unit.gameObject);
                                         units.Remove(unit);
                                         Destroy(unit.gameObject);
 
                                         // We check if it was the last unit of the player
                                         if (players[attackedPlayerIndex].units.Count == 0) {
+                                            Instantiate(playerBaseDestroyEffect, bases[attackedPlayerIndex].transform.position, Quaternion.identity);
                                             Destroy(bases[attackedPlayerIndex]);
                                             players[attackedPlayerIndex].dead = true;
                                         }
@@ -225,8 +233,20 @@ public class GameManager : MonoBehaviour {
     }
 
     void turnEnd() {
-        turn++;
-        turnBegin = true;
+        // Check for victory
+        int index = 0;
+        foreach (var player in players) {
+            if(!player.Value.dead) {
+                index++;
+            }
+        }
+        if(index == 1) {
+            winPanel.GetComponentInChildren<Text>().text = "Player " + (activePlayerIndex + 1) + " win!";
+            winPanel.SetActive(true);
+        } else {
+            turn++;
+            turnBegin = true;
+        }
     }
 
     void cameraMovement() {

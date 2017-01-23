@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Unit
+  - player_turn
+  - win_ui
   layers:
   - Default
   - TransparentFX
