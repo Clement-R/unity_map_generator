@@ -16,13 +16,13 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000010432094880}
-  - 20: {fileID: 20000013826301906}
-  - 92: {fileID: 92000011144666040}
-  - 124: {fileID: 124000012876071646}
-  - 81: {fileID: 81000013961702234}
+  - component: {fileID: 4000010432094880}
+  - component: {fileID: 20000013826301906}
+  - component: {fileID: 92000011144666040}
+  - component: {fileID: 124000012876071646}
+  - component: {fileID: 81000013961702234}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -37,12 +37,12 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000014238218688}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 104, y: 120, z: -10}
+  m_LocalPosition: {x: 213, y: 276, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &20000013826301906
 Camera:
   m_ObjectHideFlags: 1
@@ -63,7 +63,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 128
+  orthographic size: 135
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
